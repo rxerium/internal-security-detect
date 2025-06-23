@@ -1,5 +1,7 @@
 # Internal Security Detection (via Safebase)
 
+*An in-depth read can be found on my blog here: [Internal Security Detection](https://blog.rxerium.com/internal-security-detection)*
+
 Exposed SafeBase portals serve two audiences at once: prospects who need proof of your security posture, and security researchers (blue and red teamers). Each green tick reveals a control that (supposedly) exists today; every missing tick is an equally loud hint at what doesn’t.
 
 # Why collect this data?
