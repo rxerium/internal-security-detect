@@ -1,7 +1,5 @@
 # Internal Security Detection (via Safebase)
 
-*An in-depth read can be found on my blog here: [Internal Security Detection](https://blog.rxerium.com/internal-security-detection)*
-
 Exposed SafeBase portals serve two audiences at once: prospects who need proof of your security posture, and security researchers (blue and red teamers). Each green tick reveals a control that (supposedly) exists today; every missing tick is an equally loud hint at what doesn’t.
 
 # Why collect this data?
@@ -23,10 +21,11 @@ Scraping your own public trust center might seem unnecessary since you created i
 The output should look like:
 ![alt text](image.png)
 
+*An in-depth guide can be found on my blog here: [Internal Security Detection](https://blog.rxerium.com/internal-security-detection)*
+
 # References
 
 - https://safebase.io
-- https://blog.rxerium.com/internal-security-detection
 
 
 # Contact
