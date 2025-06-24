@@ -21,7 +21,7 @@ Scraping your own public trust center might seem unnecessary since you created i
 The output should look like:
 ![alt text](image.png)
 
-*An in-depth guide can be found on my blog here: [Internal Security Detection](https://blog.rxerium.com/internal-security-detection)*
+*An in-depth guide can be found here: [Internal Security Detection](https://blog.rxerium.com/internal-security-detection)*
 
 # References
 
