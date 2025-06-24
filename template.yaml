@@ -1,0 +1,304 @@
+id: safebase-checks-enabled
+info:
+  name: Safebase Internal Security Controls Enabled
+  author: rxerium
+  severity: info
+  description: |
+    Checks a public Safebase page for each documented control and
+    triggers if any of them are marked “enabled”.
+  tags: safebase,controls,audit
+
+headless:
+  - steps:
+      - action: navigate
+        args:
+          url: "{{BaseURL}}"
+      - action: sleep
+        args:
+          duration: 1s
+
+    matchers-condition: or
+    matchers:
+      - type: dsl
+        name: names
+        dsl:
+          - 'status_code == 200'
+          - 'contains_any(body, "Powered by SafeBase")'
+        condition: and
+
+      - type: regex
+        name: acceptable-use-policy
+        regex: ['(?i)Acceptable\s+Use\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: access-log-management
+        regex: ['(?i)Access\s+Log\s+Management(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: asset-management-policy
+        regex: ['(?i)Asset\s+Management\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: asset-management-practices
+        regex: ['(?i)Asset\s+Management\s+Practices(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: backup-policy
+        regex: ['(?i)Backup\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: bring-your-own-device-byod
+        regex: ['(?i)Bring\s+Your\s+Own\s+Device\s+\(BYOD\)(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: bc-dr-policy
+        regex: ['(?i)Business\s+Continuity\/Disaster\s+Recovery\s+\(BC\/DR\)\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: code-analysis
+        regex: ['(?i)Code\s+Analysis(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: cookies
+        regex: ['(?i)Cookies(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: credential-management
+        regex: ['(?i)Credential\s+Management(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: critical-dependence
+        regex: ['(?i)Critical\s+Dependence(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: cyber-insurance
+        regex: ['(?i)Cyber\s+Insurance(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: data-access
+        regex: ['(?i)Data\s+Access(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: data-classification-policy
+        regex: ['(?i)Data\s+Classification\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: data-processing-addendum
+        regex: ['(?i)Data\s+Processing\s+Addendum(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: device-lock
+        regex: ['(?i)Device\s+Lock(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: endpoint-detection-and-response
+        regex: ['(?i)Endpoint\s+Detection\s+(?:&amp;|&)\s+Response(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: encryption-at-rest
+        regex: ['(?i)Encryption\s+at\s+Rest(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: encryption-in-transit
+        regex: ['(?i)Encryption\s+in\s+Transit(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: firewall
+        regex: ['(?i)Firewall(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: incident-response-policy
+        regex: ['(?i)Incident\s+Response\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: incident-response-practices
+        regex: ['(?i)Incident\s+Response\s+Practices(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: industry-compliance
+        regex: ['(?i)Industry\s+Compliance(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: infrastructure-as-code
+        regex: ['(?i)Infrastructure\s+as\s+Code(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: internal-sso
+        regex: ['(?i)Internal\s+Single\-Sign\-On\s+\(SSO\)(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: least-privilege
+        regex: ['(?i)Least\s+Privilege(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: logging
+        regex: ['(?i)Logging(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: mobile-device-access
+        regex: ['(?i)Mobile\s+Device\s+Access(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: penetration-testing
+        regex: ['(?i)Penetration\s+Testing(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: personnel-screening
+        regex: ['(?i)Personnel\s+Screening(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: platform-status-page
+        regex: ['(?i)Platform\s+Status\s+Page(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: privacy-policy
+        regex: ['(?i)Privacy\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: remote-access
+        regex: ['(?i)Remote\s+Access(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: responsible-disclosure
+        regex: ['(?i)Responsible\s+Disclosure(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: soc-2-type-2
+        regex: ['(?i)SOC\s+2\s+Type\s+2(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: sso-support
+        regex: ['(?i)SSO\s+Support(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: separation-of-duties
+        regex: ['(?i)Separation\s+of\s+Duties(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: session-termination
+        regex: ['(?i)Session\s+Termination(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: sdlc-policy
+        regex: ['(?i)Software\s+Development\s+Lifecycle\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: status-monitoring
+        regex: ['(?i)Status\s+Monitoring(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: subprocessors
+        regex: ['(?i)Subprocessors(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: system-use-notification
+        regex: ['(?i)System\s+Use\s+Notification(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: terms-of-service
+        regex: ['(?i)Terms\s+of\s+Service(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: third-party-dependence
+        regex: ['(?i)Third\s+Party\s+Dependence(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: user-access-review
+        regex: ['(?i)User\s+Access\s+Review(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: vpn
+        regex: ['(?i)Virtual\s+Private\s+Network\s+\(VPN\)(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: vulnerability-and-patch-management
+        regex: ['(?i)Vulnerability\s+(?:&amp;|&)\s+Patch\s+Management(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: vulnerability-management-policy
+        regex: ['(?i)Vulnerability\s+Management\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      # ──────── extra controls unique to ProjectDiscovery’s portal ─────
+      - type: regex
+        name: encryption-policy
+        regex: ['(?i)Encryption\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: information-security-policy
+        regex: ['(?i)Information\s+Security\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: password-policy
+        regex: ['(?i)Password\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: physical-security-policy
+        regex: ['(?i)Physical\s+Security\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: employee-training
+        regex: ['(?i)Employee\s+Training(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: hr-security
+        regex: ['(?i)HR\s+Security(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: incident-response
+        regex: ['(?i)Incident\s+Response(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: password-manager
+        regex: ['(?i)Password\s+Manager(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: password-security
+        regex: ['(?i)Password\s+Security(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: privilege-escalation-process
+        regex: ['(?i)Privilege\s+Escalation\s+Process(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: ai-transparency-center
+        regex: ['(?i)AI\s+Transparency\s+Center(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: prompt-guardrails
+        regex: ['(?i)Prompt\s+Guardrails(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: data-breach-notifications
+        regex: ['(?i)Data\s+Breach\s+Notifications(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: data-privacy-contact
+        regex: ['(?i)Data\s+Privacy\s+Contact(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: personal-data-processed
+        regex: ['(?i)Personal\s+Data\s+Processed(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: employee-privacy-training
+        regex: ['(?i)Employee\s+Privacy\s+Training(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: data-backups
+        regex: ['(?i)Data\s+Backups(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: data-retention
+        regex: ['(?i)Data\s+Retention(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: audit-logging-policy
+        regex: ['(?i)Audit\s+Logging\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: software-bill-of-materials
+        regex: ['(?i)Software\s+Bill\s+of\s+Materials\s+\(SBOM\)(?:[\s\S]{0,600}?data-testid="enabled")?']
+
+      - type: regex
+        name: bug-bounty-program
+        regex: ['(?i)Bug\s+Bounty\s+Program(?:[\s\S]{0,600}?data-testid="enabled")?']
