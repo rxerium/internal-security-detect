@@ -24,48 +24,6 @@ The output should look like:
 
 *An in-depth guide can be found here: [Internal Security Detection](https://blog.rxerium.com/internal-security-detection)*
 
-## Show Missing Controls
-
-To see which controls are **present** AND **missing** from a SafeBase portal, use the included `scan.sh` script:
-
-```bash
-./scan.sh https://security.projectdiscovery.io
-```
-
-Example output:
-```
-==============================================
-SafeBase Security Controls Scanner
-==============================================
-Target: https://security.projectdiscovery.io
-Total controls in template: 163
-
-==============================================
-CONTROLS PRESENT (54 found)
-==============================================
-  ✓ access-control
-  ✓ access-log-management
-  ✓ bug-bounty-program
-  ...
-
-==============================================
-CONTROLS MISSING (109 not found)
-==============================================
-  ✗ ai-governance
-  ✗ anti-bribery-and-corruption
-  ✗ ccpa
-  ...
-
-==============================================
-SUMMARY
-==============================================
-  Present: 54 / 163
-  Missing: 109 / 163
-  Coverage: 33%
-```
-
-This helps identify gaps in a target's security posture compared to industry standards.
-
 ## Finding SafeBase Sites
 
 Use this Google dork to discover SafeBase trust centers:
