@@ -5,8 +5,18 @@ info:
   severity: info
   description: |
     Checks a public Safebase page for each documented control and
-    triggers if any of them are marked “enabled”.
-  tags: safebase,controls,audit
+    triggers if any of them are marked "enabled". This template detects
+    security controls commonly found on SafeBase trust centers.
+  reference:
+    - https://safebase.io
+    - https://blog.rxerium.com/internal-security-detection
+  metadata:
+    max-request: 1
+    google-dork: "Powered by SafeBase"
+    verified: true
+  classification:
+    cwe-id: CWE-200
+  tags: safebase,controls,audit,compliance,security-posture,trust-center
 
 headless:
   - steps:
@@ -20,7 +30,7 @@ headless:
     matchers-condition: or
     matchers:
       - type: dsl
-        name: names
+        name: safebase-detected
         dsl:
           - 'status_code == 200'
           - 'contains_any(body, "Powered by SafeBase")'
@@ -28,277 +38,652 @@ headless:
 
       - type: regex
         name: acceptable-use-policy
-        regex: ['(?i)Acceptable\s+Use\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+        regex: ['(?i)Acceptable\s+Use\s+Policy']
+
+      - type: regex
+        name: access-control
+        regex: ['(?i)Access\s+Control']
+
+      - type: regex
+        name: access-control-policy
+        regex: ['(?i)Access\s+Control\s+Policy']
 
       - type: regex
         name: access-log-management
-        regex: ['(?i)Access\s+Log\s+Management(?:[\s\S]{0,600}?data-testid="enabled")?']
+        regex: ['(?i)Access\s+Log\s+Management']
+
+      - type: regex
+        name: access-monitoring
+        regex: ['(?i)Access\s+Monitoring']
+
+      - type: regex
+        name: access-monitoring-policy
+        regex: ['(?i)Access\s+Monitoring\s+Policy']
+
+      - type: regex
+        name: ai-governance
+        regex: ['(?i)AI\s+Governance']
+
+      - type: regex
+        name: ai-risk-statement
+        regex: ['(?i)AI\s+Risk\s+Statement']
+
+      - type: regex
+        name: ai-security
+        regex: ['(?i)AI\s+Security']
+
+      - type: regex
+        name: ai-training-data
+        regex: ['(?i)AI\s+Training\s+Data']
+
+      - type: regex
+        name: ai-training-data-and-bias
+        regex: ['(?i)AI\s+Training\s+Data\s+and\s+Bias']
+
+      - type: regex
+        name: alignment-with-eu-ai-act-principles
+        regex: ['(?i)Alignment\s+with\s+EU\s+AI\s+Act\s+Principles']
+
+      - type: regex
+        name: allow-list-restrictions
+        regex: ['(?i)Allow\s+List\s+Restrictions']
+
+      - type: regex
+        name: alternate-work-sites
+        regex: ['(?i)Alternate\s+Work\s+Sites']
+
+      - type: regex
+        name: anti-bribery-and-corruption
+        regex: ['(?i)Anti-Bribery\s+and\s+Corruption']
+
+      - type: regex
+        name: anti-ddos
+        regex: ['(?i)Anti-DDoS']
+
+      - type: regex
+        name: anti-modern-slavery
+        regex: ['(?i)Anti-Modern\s+Slavery']
+
+      - type: regex
+        name: application-penetration-testing
+        regex: ['(?i)Application\s+Penetration\s+Testing']
+
+      - type: regex
+        name: approach-to-ai
+        regex: ['(?i)Approach\s+to\s+AI']
+
+      - type: regex
+        name: asset-management
+        regex: ['(?i)Asset\s+Management']
 
       - type: regex
         name: asset-management-policy
-        regex: ['(?i)Asset\s+Management\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+        regex: ['(?i)Asset\s+Management\s+Policy']
 
       - type: regex
         name: asset-management-practices
-        regex: ['(?i)Asset\s+Management\s+Practices(?:[\s\S]{0,600}?data-testid="enabled")?']
+        regex: ['(?i)Asset\s+Management\s+Practices']
 
       - type: regex
-        name: backup-policy
-        regex: ['(?i)Backup\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
+        name: audit-logging
+        regex: ['(?i)Audit\s+Logging']
+
+      - type: regex
+        name: authentication
+        regex: ['(?i)Authentication']
+
+      - type: regex
+        name: bc-dr
+        regex: ['(?i)BC\/DR']
 
       - type: regex
         name: bring-your-own-device-byod
-        regex: ['(?i)Bring\s+Your\s+Own\s+Device\s+\(BYOD\)(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: bc-dr-policy
-        regex: ['(?i)Business\s+Continuity\/Disaster\s+Recovery\s+\(BC\/DR\)\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: code-analysis
-        regex: ['(?i)Code\s+Analysis(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: cookies
-        regex: ['(?i)Cookies(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: credential-management
-        regex: ['(?i)Credential\s+Management(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: critical-dependence
-        regex: ['(?i)Critical\s+Dependence(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: cyber-insurance
-        regex: ['(?i)Cyber\s+Insurance(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: data-access
-        regex: ['(?i)Data\s+Access(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: data-classification-policy
-        regex: ['(?i)Data\s+Classification\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: data-processing-addendum
-        regex: ['(?i)Data\s+Processing\s+Addendum(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: device-lock
-        regex: ['(?i)Device\s+Lock(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: endpoint-detection-and-response
-        regex: ['(?i)Endpoint\s+Detection\s+(?:&amp;|&)\s+Response(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: encryption-at-rest
-        regex: ['(?i)Encryption\s+at\s+Rest(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: encryption-in-transit
-        regex: ['(?i)Encryption\s+in\s+Transit(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: firewall
-        regex: ['(?i)Firewall(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: incident-response-policy
-        regex: ['(?i)Incident\s+Response\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: incident-response-practices
-        regex: ['(?i)Incident\s+Response\s+Practices(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: industry-compliance
-        regex: ['(?i)Industry\s+Compliance(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: infrastructure-as-code
-        regex: ['(?i)Infrastructure\s+as\s+Code(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: internal-sso
-        regex: ['(?i)Internal\s+Single\-Sign\-On\s+\(SSO\)(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: least-privilege
-        regex: ['(?i)Least\s+Privilege(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: logging
-        regex: ['(?i)Logging(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: mobile-device-access
-        regex: ['(?i)Mobile\s+Device\s+Access(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: penetration-testing
-        regex: ['(?i)Penetration\s+Testing(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: personnel-screening
-        regex: ['(?i)Personnel\s+Screening(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: platform-status-page
-        regex: ['(?i)Platform\s+Status\s+Page(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: privacy-policy
-        regex: ['(?i)Privacy\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: remote-access
-        regex: ['(?i)Remote\s+Access(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: responsible-disclosure
-        regex: ['(?i)Responsible\s+Disclosure(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: soc-2-type-2
-        regex: ['(?i)SOC\s+2\s+Type\s+2(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: sso-support
-        regex: ['(?i)SSO\s+Support(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: separation-of-duties
-        regex: ['(?i)Separation\s+of\s+Duties(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: session-termination
-        regex: ['(?i)Session\s+Termination(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: sdlc-policy
-        regex: ['(?i)Software\s+Development\s+Lifecycle\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: status-monitoring
-        regex: ['(?i)Status\s+Monitoring(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: subprocessors
-        regex: ['(?i)Subprocessors(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: system-use-notification
-        regex: ['(?i)System\s+Use\s+Notification(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: terms-of-service
-        regex: ['(?i)Terms\s+of\s+Service(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: third-party-dependence
-        regex: ['(?i)Third\s+Party\s+Dependence(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: user-access-review
-        regex: ['(?i)User\s+Access\s+Review(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: vpn
-        regex: ['(?i)Virtual\s+Private\s+Network\s+\(VPN\)(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: vulnerability-and-patch-management
-        regex: ['(?i)Vulnerability\s+(?:&amp;|&)\s+Patch\s+Management(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: vulnerability-management-policy
-        regex: ['(?i)Vulnerability\s+Management\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      # ──────── extra controls unique to ProjectDiscovery’s portal ─────
-      - type: regex
-        name: encryption-policy
-        regex: ['(?i)Encryption\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: information-security-policy
-        regex: ['(?i)Information\s+Security\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: password-policy
-        regex: ['(?i)Password\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: physical-security-policy
-        regex: ['(?i)Physical\s+Security\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: employee-training
-        regex: ['(?i)Employee\s+Training(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: hr-security
-        regex: ['(?i)HR\s+Security(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: incident-response
-        regex: ['(?i)Incident\s+Response(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: password-manager
-        regex: ['(?i)Password\s+Manager(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: password-security
-        regex: ['(?i)Password\s+Security(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: privilege-escalation-process
-        regex: ['(?i)Privilege\s+Escalation\s+Process(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: ai-transparency-center
-        regex: ['(?i)AI\s+Transparency\s+Center(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: prompt-guardrails
-        regex: ['(?i)Prompt\s+Guardrails(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: data-breach-notifications
-        regex: ['(?i)Data\s+Breach\s+Notifications(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: data-privacy-contact
-        regex: ['(?i)Data\s+Privacy\s+Contact(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: personal-data-processed
-        regex: ['(?i)Personal\s+Data\s+Processed(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: employee-privacy-training
-        regex: ['(?i)Employee\s+Privacy\s+Training(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: data-backups
-        regex: ['(?i)Data\s+Backups(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: data-retention
-        regex: ['(?i)Data\s+Retention(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: audit-logging-policy
-        regex: ['(?i)Audit\s+Logging\s+Policy(?:[\s\S]{0,600}?data-testid="enabled")?']
-
-      - type: regex
-        name: software-bill-of-materials
-        regex: ['(?i)Software\s+Bill\s+of\s+Materials\s+\(SBOM\)(?:[\s\S]{0,600}?data-testid="enabled")?']
+        regex: ['(?i)Bring\s+Your\s+Own\s+Device\s+\(BYOD\)']
 
       - type: regex
         name: bug-bounty-program
-        regex: ['(?i)Bug\s+Bounty\s+Program(?:[\s\S]{0,600}?data-testid="enabled")?']
+        regex: ['(?i)Bug\s+Bounty\s+Program']
+
+      - type: regex
+        name: business-continuity-and-disaster-recovery
+        regex: ['(?i)Business\s+Continuity\s+and\s+Disaster\s+Recovery']
+
+      - type: regex
+        name: business-continuity-disaster-recovery-bc-dr-policy
+        regex: ['(?i)Business\s+Continuity\/Disaster\s+Recovery\s+\(BC\/DR\)\s+Policy']
+
+      - type: regex
+        name: capacity-management
+        regex: ['(?i)Capacity\s+Management']
+
+      - type: regex
+        name: ccpa
+        regex: ['(?i)CCPA']
+
+      - type: regex
+        name: certificate-of-insurance
+        regex: ['(?i)Certificate\s+of\s+Insurance']
+
+      - type: regex
+        name: change-enablement-policy
+        regex: ['(?i)Change\s+Enablement\s+Policy']
+
+      - type: regex
+        name: code-analysis
+        regex: ['(?i)Code\s+Analysis']
+
+      - type: regex
+        name: code-of-conduct
+        regex: ['(?i)Code\s+of\s+Conduct']
+
+      - type: regex
+        name: collected-data-access
+        regex: ['(?i)Collected\s+Data\s+Access']
+
+      - type: regex
+        name: continual-improvement-policy
+        regex: ['(?i)Continual\s+Improvement\s+Policy']
+
+      - type: regex
+        name: cookies
+        regex: ['(?i)Cookies']
+
+      - type: regex
+        name: credential-management
+        regex: ['(?i)Credential\s+Management']
+
+      - type: regex
+        name: critical-dependence
+        regex: ['(?i)Critical\s+Dependence']
+
+      - type: regex
+        name: csa-star
+        regex: ['(?i)CSA\s+STAR']
+
+      - type: regex
+        name: csa-star-certification
+        regex: ['(?i)CSA\s+STAR\s+Certification']
+
+      - type: regex
+        name: csa-star-for-ai
+        regex: ['(?i)CSA\s+STAR\s+for\s+AI']
+
+      - type: regex
+        name: csa-star-level-1
+        regex: ['(?i)CSA\s+STAR\s+Level\s+1']
+
+      - type: regex
+        name: csa-star-level-2
+        regex: ['(?i)CSA\s+STAR\s+Level\s+2']
+
+      - type: regex
+        name: csa-star-level-2-certification
+        regex: ['(?i)CSA\s+STAR\s+Level\s+2\s+Certification']
+
+      - type: regex
+        name: csa-trusted-cloud-provider
+        regex: ['(?i)CSA\s+Trusted\s+Cloud\s+Provider']
+
+      - type: regex
+        name: customer-audit-rights
+        regex: ['(?i)Customer\s+Audit\s+Rights']
+
+      - type: regex
+        name: cyber-essentials-plus
+        regex: ['(?i)Cyber\s+Essentials\s+Plus']
+
+      - type: regex
+        name: cyber-insurance
+        regex: ['(?i)Cyber\s+Insurance']
+
+      - type: regex
+        name: data-access
+        regex: ['(?i)Data\s+Access']
+
+      - type: regex
+        name: data-backups
+        regex: ['(?i)Data\s+Backups']
+
+      - type: regex
+        name: data-breach-notifications
+        regex: ['(?i)Data\s+Breach\s+Notifications']
+
+      - type: regex
+        name: data-de-identification
+        regex: ['(?i)Data\s+De-Identification']
+
+      - type: regex
+        name: data-deletion-data-retention
+        regex: ['(?i)Data\s+Deletion\s+\/\s+Data\s+Retention']
+
+      - type: regex
+        name: data-erasure
+        regex: ['(?i)Data\s+Erasure']
+
+      - type: regex
+        name: data-exfiltration-monitoring
+        regex: ['(?i)Data\s+Exfiltration\s+Monitoring']
+
+      - type: regex
+        name: data-flow-diagram
+        regex: ['(?i)Data\s+Flow\s+Diagram']
+
+      - type: regex
+        name: data-loss-prevention
+        regex: ['(?i)Data\s+Loss\s+Prevention']
+
+      - type: regex
+        name: data-privacy-officer
+        regex: ['(?i)Data\s+Privacy\s+Officer']
+
+      - type: regex
+        name: data-processing-agreement
+        regex: ['(?i)Data\s+Processing\s+Agreement']
+
+      - type: regex
+        name: data-residency
+        regex: ['(?i)Data\s+Residency']
+
+      - type: regex
+        name: data-retention
+        regex: ['(?i)Data\s+Retention']
+
+      - type: regex
+        name: data-retention-amp-disposal
+        regex: ['(?i)Data\s+Retention\s+\(?:\(?:&amp;|&\)amp;|\(?:&amp;|&\)\)\s+Disposal']
+
+      - type: regex
+        name: data-roles-controller-and-processor
+        regex: ['(?i)Data\s+Roles:\s+Controller\s+and\s+Processor']
+
+      - type: regex
+        name: data-security
+        regex: ['(?i)Data\s+Security']
+
+      - type: regex
+        name: decision-making-and-human-oversight
+        regex: ['(?i)Decision-Making\s+and\s+Human\s+Oversight']
+
+      - type: regex
+        name: disaster-recovery-amp-backups
+        regex: ['(?i)Disaster\s+Recovery\s+\(?:\(?:&amp;|&\)amp;|\(?:&amp;|&\)\)\s+Backups']
+
+      - type: regex
+        name: disk-encryption
+        regex: ['(?i)Disk\s+Encryption']
+
+      - type: regex
+        name: dns-filtering
+        regex: ['(?i)DNS\s+Filtering']
+
+      - type: regex
+        name: dod-il4
+        regex: ['(?i)DoD\s+IL4']
+
+      - type: regex
+        name: dora
+        regex: ['(?i)DORA']
+
+      - type: regex
+        name: email-protection
+        regex: ['(?i)Email\s+Protection']
+
+      - type: regex
+        name: employee-privacy-training
+        regex: ['(?i)Employee\s+Privacy\s+Training']
+
+      - type: regex
+        name: employee-training
+        regex: ['(?i)Employee\s+Training']
+
+      - type: regex
+        name: employers-liability-insurance
+        regex: ['(?i)Employers\s+Liability\s+Insurance']
+
+      - type: regex
+        name: encryption-at-rest
+        regex: ['(?i)Encryption-at-rest']
+
+      - type: regex
+        name: endpoint-detection-amp-response
+        regex: ['(?i)Endpoint\s+Detection\s+\(?:\(?:&amp;|&\)amp;|\(?:&amp;|&\)\)\s+Response']
+
+      - type: regex
+        name: environment-social-and-governance
+        regex: ['(?i)Environment\s+Social\s+and\s+Governance']
+
+      - type: regex
+        name: eu-ai-act
+        regex: ['(?i)EU\s+AI\s+Act']
+
+      - type: regex
+        name: eu-us-dpf
+        regex: ['(?i)EU-US\s+DPF']
+
+      - type: regex
+        name: fedramp-high
+        regex: ['(?i)FedRAMP\s+High']
+
+      - type: regex
+        name: fedramp-moderate
+        regex: ['(?i)FedRAMP\s+Moderate']
+
+      - type: regex
+        name: fips-140-2
+        regex: ['(?i)FIPS\s+140-2']
+
+      - type: regex
+        name: firewall
+        regex: ['(?i)Firewall']
+
+      - type: regex
+        name: gdpr
+        regex: ['(?i)GDPR']
+
+      - type: regex
+        name: gdpr-compliance-and-ai
+        regex: ['(?i)GDPR\s+Compliance\s+and\s+AI']
+
+      - type: regex
+        name: govramp
+        regex: ['(?i)GovRAMP']
+
+      - type: regex
+        name: health-data-hosting-hds-france
+        regex: ['(?i)Health\s+Data\s+Hosting\s+\(HDS\)\s+France']
+
+      - type: regex
+        name: hecvat
+        regex: ['(?i)HECVAT']
+
+      - type: regex
+        name: hecvat-full
+        regex: ['(?i)HECVAT\s+Full']
+
+      - type: regex
+        name: hecvat-lite
+        regex: ['(?i)HECVAT\s+Lite']
+
+      - type: regex
+        name: hipaa
+        regex: ['(?i)HIPAA']
+
+      - type: regex
+        name: hr-security
+        regex: ['(?i)HR\s+Security']
+
+      - type: regex
+        name: ids-ips
+        regex: ['(?i)IDS\/IPS']
+
+      - type: regex
+        name: incident-response
+        regex: ['(?i)Incident\s+Response']
+
+      - type: regex
+        name: incident-response-plan
+        regex: ['(?i)Incident\s+Response\s+Plan']
+
+      - type: regex
+        name: infrastructure-logging
+        regex: ['(?i)Infrastructure\s+Logging']
+
+      - type: regex
+        name: irap
+        regex: ['(?i)IRAP']
+
+      - type: regex
+        name: irap-protected-documentation
+        regex: ['(?i)IRAP\s+Protected\s+Documentation']
+
+      - type: regex
+        name: iso-27001-27017-27018
+        regex: ['(?i)ISO\s+27001\s+\/\s+27017\s+\/\s+27018']
+
+      - type: regex
+        name: iso-iec-20243-2024
+        regex: ['(?i)ISO\/IEC\s+20243:2024']
+
+      - type: regex
+        name: iso-iec-27001
+        regex: ['(?i)ISO\/IEC\s+27001']
+
+      - type: regex
+        name: iso-iec-27001-soa
+        regex: ['(?i)ISO\/IEC\s+27001\s+SoA']
+
+      - type: regex
+        name: iso-iec-27001-2022
+        regex: ['(?i)ISO\/IEC\s+27001:2022']
+
+      - type: regex
+        name: iso-iec-27017
+        regex: ['(?i)ISO\/IEC\s+27017']
+
+      - type: regex
+        name: iso-iec-27018
+        regex: ['(?i)ISO\/IEC\s+27018']
+
+      - type: regex
+        name: iso-iec-27701
+        regex: ['(?i)ISO\/IEC\s+27701']
+
+      - type: regex
+        name: iso-iec-27701-2019
+        regex: ['(?i)ISO\/IEC\s+27701:2019']
+
+      - type: regex
+        name: iso-iec-42001-2023
+        regex: ['(?i)ISO\/IEC\s+42001:2023']
+
+      - type: regex
+        name: logging
+        regex: ['(?i)Logging']
+
+      - type: regex
+        name: mobile-device-management
+        regex: ['(?i)Mobile\s+Device\s+Management']
+
+      - type: regex
+        name: model-evaluations-fairness-amp-bias
+        regex: ['(?i)Model\s+Evaluations,\s+Fairness\s+\(?:\(?:&amp;|&\)amp;|\(?:&amp;|&\)\)\s+Bias']
+
+      - type: regex
+        name: model-pretraining
+        regex: ['(?i)Model\s+Pretraining']
+
+      - type: regex
+        name: modern-slavery
+        regex: ['(?i)Modern\s+Slavery']
+
+      - type: regex
+        name: multi-factor-authentication
+        regex: ['(?i)Multi-Factor\s+Authentication']
+
+      - type: regex
+        name: network-data-flow-diagrams
+        regex: ['(?i)Network\s+\/\s+Data\s+Flow\s+Diagrams']
+
+      - type: regex
+        name: network-diagram
+        regex: ['(?i)Network\s+Diagram']
+
+      - type: regex
+        name: nist
+        regex: ['(?i)NIST']
+
+      - type: regex
+        name: nist-800-53-rev-5
+        regex: ['(?i)NIST\s+800-53\s+Rev.\s+5']
+
+      - type: regex
+        name: ongoing-third-party-bias-audits
+        regex: ['(?i)Ongoing\s+Third-Party\s+Bias\s+Audits']
+
+      - type: regex
+        name: operational-resilience-and-redundancy-policy
+        regex: ['(?i)Operational\s+Resilience\s+and\s+Redundancy\s+Policy']
+
+      - type: regex
+        name: optiv-iso27001
+        regex: ['(?i)OPTIV\s+ISO27001']
+
+      - type: regex
+        name: overarching-operational-resilience-and-redundancy-plan
+        regex: ['(?i)Overarching\s+Operational\s+Resilience\s+and\s+Redundancy\s+Plan']
+
+      - type: regex
+        name: password-security
+        regex: ['(?i)Password\s+Security']
+
+      - type: regex
+        name: pci-dss
+        regex: ['(?i)PCI\s+DSS']
+
+      - type: regex
+        name: pci-dss-v4-0-0
+        regex: ['(?i)PCI\s+DSS\s+v4.0.0']
+
+      - type: regex
+        name: phishing-training
+        regex: ['(?i)Phishing\s+Training']
+
+      - type: regex
+        name: privacy-mark
+        regex: ['(?i)Privacy\s+Mark']
+
+      - type: regex
+        name: privacy-officer
+        regex: ['(?i)Privacy\s+Officer']
+
+      - type: regex
+        name: privacy-policy
+        regex: ['(?i)Privacy\s+Policy']
+
+      - type: regex
+        name: responsible-disclosure
+        regex: ['(?i)Responsible\s+Disclosure']
+
+      - type: regex
+        name: responsible-disclosure-amp-bug-bounty
+        regex: ['(?i)Responsible\s+Disclosure\s+\(?:\(?:&amp;|&\)amp;|\(?:&amp;|&\)\)\s+Bug\s+Bounty']
+
+      - type: regex
+        name: risk-assessments
+        regex: ['(?i)Risk\s+Assessments']
+
+      - type: regex
+        name: role-based-training
+        regex: ['(?i)Role-Based\s+Training']
+
+      - type: regex
+        name: secure-development-training
+        regex: ['(?i)Secure\s+Development\s+Training']
+
+      - type: regex
+        name: secure-software-development-lifecycle
+        regex: ['(?i)Secure\s+Software\s+Development\s+Lifecycle']
+
+      - type: regex
+        name: security-information-and-event-management
+        regex: ['(?i)Security\s+Information\s+and\s+Event\s+Management']
+
+      - type: regex
+        name: security-operations-center-soc
+        regex: ['(?i)Security\s+Operations\s+Center\s+\(SOC\)']
+
+      - type: regex
+        name: soc-1
+        regex: ['(?i)SOC\s+1']
+
+      - type: regex
+        name: soc-2
+        regex: ['(?i)SOC\s+2']
+
+      - type: regex
+        name: soc-2-type-2
+        regex: ['(?i)SOC\s+2\s+Type\s+2']
+
+      - type: regex
+        name: soc-3
+        regex: ['(?i)SOC\s+3']
+
+      - type: regex
+        name: software-development-lifecycle
+        regex: ['(?i)Software\s+Development\s+Lifecycle']
+
+      - type: regex
+        name: sso-support
+        regex: ['(?i)SSO\s+Support']
+
+      - type: regex
+        name: status-monitoring
+        regex: ['(?i)Status\s+Monitoring']
+
+      - type: regex
+        name: status-monitoring-of-sla
+        regex: ['(?i)Status\s+Monitoring\s+of\s+SLA']
+
+      - type: regex
+        name: sub-processors
+        regex: ['(?i)Sub-processors']
+
+      - type: regex
+        name: subprocessors
+        regex: ['(?i)Subprocessors']
+
+      - type: regex
+        name: supplier-code-of-conduct
+        regex: ['(?i)Supplier\s+Code\s+of\s+Conduct']
+
+      - type: regex
+        name: supply-chain-risk-management
+        regex: ['(?i)Supply\s+Chain\s+Risk\s+Management']
+
+      - type: regex
+        name: swiss-us-dpf
+        regex: ['(?i)Swiss-US\s+DPF']
+
+      - type: regex
+        name: technical-and-organisational-measures
+        regex: ['(?i)Technical\s+and\s+Organisational\s+Measures']
+
+      - type: regex
+        name: third-party-dependence
+        regex: ['(?i)Third\s+Party\s+Dependence']
+
+      - type: regex
+        name: tisax
+        regex: ['(?i)TISAX']
+
+      - type: regex
+        name: truste-responsible-ai-certification
+        regex: ['(?i)TRUSTe\s+Responsible\s+AI\s+Certification']
+
+      - type: regex
+        name: tx-ramp
+        regex: ['(?i)TX-RAMP']
+
+      - type: regex
+        name: uk-extension-to-eu-us-dpf
+        regex: ['(?i)UK\s+Extension\s+to\s+EU-US\s+DPF']
+
+      - type: regex
+        name: us-employment-law-compliance
+        regex: ['(?i)US\s+Employment\s+Law\s+Compliance']
+
+      - type: regex
+        name: vendor-management
+        regex: ['(?i)Vendor\s+Management']
+
+      - type: regex
+        name: voluntary-product-accessibility-template-vpat
+        regex: ['(?i)Voluntary\s+Product\s+Accessibility\s+Template®\s+\(VPAT®\)']
+
+      - type: regex
+        name: vpat
+        regex: ['(?i)VPAT']
+
+      - type: regex
+        name: vulnerability-amp-patch-management
+        regex: ['(?i)Vulnerability\s+\(?:\(?:&amp;|&\)amp;|\(?:&amp;|&\)\)\s+Patch\s+Management']
